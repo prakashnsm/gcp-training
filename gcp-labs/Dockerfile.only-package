@@ -1,0 +1,12 @@
+FROM openjdk:8-jre-slim
+
+EXPOSE 8080
+
+RUN mkdir /app
+
+COPY build/libs/*.jar /app/spring-boot-application.jar
+COPY keys/*.* /app/keys/
+
+ENV GOOGLE_APPLICATION_CREDENTIALS /app/keys/training-lab-312413-a2b41b7865bd.json
+
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]
